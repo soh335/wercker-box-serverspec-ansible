@@ -1,0 +1,25 @@
+name: serverspec-ansible
+version: 0.0.1
+inherits: wercker/ruby@1.0.0
+type: main
+platform: ubuntu@12.04
+description: wercker box for serverspec and ansible
+keywords:
+  - serverspec
+  - ansible
+packages:
+  - serverspec@2.8.1
+  - ansible@1.8.2
+script: |
+  # serverspec
+  sudo gem install serverspec -v 2.8.1
+
+  # ansible
+  sudo apt-get update
+  sudo apt-get install curl git build-essential libyaml-dev python-dev python-pip
+  sudo pip install paramiko PyYAML jinja2 httplib2
+  git clone git://github.com/ansible/ansible.git
+  cd ansible
+  git checkout v1.8.2
+  git submodule update --init --recursive
+  sudo make install
